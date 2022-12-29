@@ -1,0 +1,9 @@
+# ninja log v5
+3	790	1672093710363071684	CMakeFiles/MersulTrenurilorOOP.dir/src/Register.cpp.o	994a35db875463f1
+3	727	1672093469691524016	CMakeFiles/MersulTrenurilorOOP.dir/lib/sha256.cpp.o	b80ff0e841943878
+2	748	1672093469715523478	CMakeFiles/MersulTrenurilorOOP.dir/src/DatabaseHandler.cpp.o	70d228afe535945a
+1	38	1672093469003539415	CMakeFiles/MersulTrenurilorOOP.dir/src/Client.cpp.o	27d7022dff2afe8a
+2	694	1672225286954297980	CMakeFiles/MersulTrenurilorOOP.dir/src/Client.cpp.o	27d7022dff2afe8a
+3	754	1672225287014297296	CMakeFiles/MersulTrenurilorOOP.dir/src/Register.cpp.o	994a35db875463f1
+2	769	1672225287030297114	CMakeFiles/MersulTrenurilorOOP.dir/src/Login.cpp.o	8d0fe65b153868c6
+1	785	1672225287046296933	CMakeFiles/MersulTrenurilorOOP.dir/src/Server.cpp.o	11cc748b6c4715a5

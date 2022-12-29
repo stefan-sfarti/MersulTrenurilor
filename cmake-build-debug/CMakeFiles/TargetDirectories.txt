@@ -1,0 +1,3 @@
+/home/stefan/CLionProjects/MersulTrenurilorOOP/cmake-build-debug/CMakeFiles/MersulTrenurilorOOP.dir
+/home/stefan/CLionProjects/MersulTrenurilorOOP/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/stefan/CLionProjects/MersulTrenurilorOOP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
