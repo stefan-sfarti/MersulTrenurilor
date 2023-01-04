@@ -11,7 +11,7 @@ class DbCon {
 private:
     const char *server{"localhost"};
     const char *user{"stefan"};
-    const char *password{"Entombed5800*"};
+    const char *password{"password"};
     const char *database{"STUDENT"};
 public:
     MYSQL *connection_setup();
@@ -19,6 +19,9 @@ public:
     std::string GetTrainsToday(MYSQL *con);
     std::string GetArrivals(MYSQL *con);
     std::string GetDepartures(MYSQL *con);
+    void AddAccount(MYSQL *con, std::string username, std::string password);
+    bool CheckUserDetails(MYSQL *con, std::string username, std::string password);
+    bool CheckUsername(MYSQL *con, std::string username);
 };
 
 

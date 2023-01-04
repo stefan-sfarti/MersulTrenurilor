@@ -14,7 +14,9 @@ constexpr unsigned short int port = 49500;
 
 enum ReqType{
     Arrivals = '1',
-    Departures = '2'
+    Departures = '2',
+    Log_in = '1',
+    Register = '2'
 };
 
 #endif //__TRIAL_COMMON_H__

@@ -5,12 +5,14 @@
 #ifndef TRIAL_LOGIN_H
 #define TRIAL_LOGIN_H
 #include <iostream>
+#include "common.h"
+#include "sha256.h"
+#include "DbCon.h"
 
 class Login {
 public:
-    bool CheckUsername(std::string username);
-    bool CheckPassword(std::string password);
-    bool RegisterAccount(std::string username, std::string password);
+    bool RegisterAccount(DbCon &dbCon, MYSQL *con, std::string username, std::string password);
+    bool LoginAccount (DbCon &dbCon, MYSQL *con, std::string username, std::string password);
 };
 
 

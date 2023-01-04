@@ -15,10 +15,24 @@ int main () {
         std::cout << "Error connecting to server" << std::endl;
     }
     std::cout << "Connected to server" << std::endl;
-
     char buffer[2048];
     char req[256];
-    std::cout << "Displaying trains for today: " << std::endl;
+    std::cout << "Press 1 to login or 2 to register an account" << std::endl;
+    std::cin >> req;
+    write(s, &req, sizeof req);
+    memset(req, 0, sizeof(req));
+    std::cout << "Enter your username: " << std::endl;
+    std::cin >> req;
+    write(s, &req, sizeof req);
+    memset(req, 0, sizeof(req));
+    std::cout << "Enter your password: " << std::endl;
+    std::cin >> req;
+    write(s, &req, sizeof req);
+    read ( s, & buffer, sizeof (buffer) );
+    std :: cout << buffer << std::endl;
+
+
+   /* std::cout << "Displaying trains for today: " << std::endl;
     read ( s, & buffer, sizeof (buffer) );
     std :: cout << buffer << '\n';
 
@@ -34,7 +48,7 @@ int main () {
     write ( s, & req, sizeof (req) );
     memset(buffer, 0, sizeof(buffer));
     read ( s, & buffer, sizeof (buffer) );
-    std::cout << buffer << '\n';
+    std::cout << buffer << '\n';*/
 
     close(s);
     return 0;

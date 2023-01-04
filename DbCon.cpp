@@ -3,6 +3,7 @@
 //
 #include "common.h"
 #include "DbCon.h"
+#include "sha256.h"
 
 MYSQL *DbCon::connection_setup() {
     MYSQL *con = mysql_init(NULL);
@@ -96,3 +97,48 @@ std::string DbCon::GetDepartures(MYSQL *con) {
     mysql_free_result(res);
     return message;
 }
+
+bool DbCon::CheckUsername(MYSQL *con, std::string username) {
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+    std::string query = "SELECT username FROM Accounts WHERE username ='" + username +"';";
+    res = mysql_execute_query(con, query.c_str());
+    row = mysql_fetch_row(res);
+    if (row != NULL){
+        mysql_free_result(res);
+        return false;
+    }else {
+        mysql_free_result(res);
+        return true;
+    }
+}
+
+
+bool DbCon::CheckUserDetails(MYSQL *con, std::string username,std::string password) {
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+    SHA256 sha256;
+    std::string hashedPass = sha256(password);
+    std::string query = "SELECT username FROM Accounts WHERE username ='" + username +"' AND password = '" +hashedPass +"';";
+    res = mysql_execute_query(con, query.c_str());
+    row = mysql_fetch_row(res);
+    if (row != NULL){
+        mysql_free_result(res);
+        return true;
+    }else {
+        mysql_free_result(res);
+        return false;
+    }
+}
+
+void DbCon::AddAccount(MYSQL *con, std::string username, std::string password) {
+    SHA256 sha256;
+    std::string hashedPass = sha256(password);
+    std::string query = "INSERT INTO Accounts (username,password) VALUES (\"" + username + "\"" + ",\"" + hashedPass + "\");";
+    if (mysql_send_query(con, query.c_str(), query.length()) != 0){
+        std::cout << "MySQL Query Error: " << mysql_error(con) << std::endl;
+        exit(1);
+    }
+}
+
+
