@@ -8,7 +8,6 @@
 #include "common.h"
 
 
-
 void Thread :: run () {
     DbCon dbCon;
     MYSQL *con = dbCon.connection_setup();

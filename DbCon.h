@@ -11,7 +11,7 @@ class DbCon {
 private:
     const char *server{"localhost"};
     const char *user{"stefan"};
-    const char *password{"password"};
+    const char *password{"Entombed5800*"};
     const char *database{"STUDENT"};
 public:
     MYSQL *connection_setup();

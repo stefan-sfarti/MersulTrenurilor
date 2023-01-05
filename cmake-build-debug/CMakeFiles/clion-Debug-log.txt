@@ -1,4 +1,4 @@
-/snap/clion/219/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/stefan/CLionProjects/MersulTrenurilor -B /home/stefan/CLionProjects/MersulTrenurilor/cmake-build-debug
+/snap/clion/219/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/219/bin/ninja/linux/ninja -G Ninja -S /home/stefan/CLionProjects/MersulTrenurilor -B /home/stefan/CLionProjects/MersulTrenurilor/cmake-build-debug
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/stefan/CLionProjects/MersulTrenurilor/cmake-build-debug
