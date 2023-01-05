@@ -4,7 +4,7 @@
 
 #include "Login.h"
 
-bool Login::RegisterAccount(DbCon &dbCon, MYSQL *con, std::string username, std::string password) {
+bool Login::RegisterAccount(DbHandler &dbCon, MYSQL *con, std::string &username, std::string &password) const {
     if (dbCon.CheckUsername(con, username) && password.length() > 6) {
         dbCon.AddAccount(con, username, password);
         std::cout << "Registration successful" << std::endl;
@@ -15,12 +15,10 @@ bool Login::RegisterAccount(DbCon &dbCon, MYSQL *con, std::string username, std:
     }
 }
 
-bool Login::LoginAccount(DbCon &dbCon, MYSQL *con, std::string username, std::string password) {
+bool Login::LoginAccount(DbHandler &dbCon, MYSQL *con, std::string &username, std::string &password) const{
     if (dbCon.CheckUserDetails(con, username, password)){
-        std::cout << "Login successful" << std::endl;
         return true;
     }else {
-        std::cout << "Login failed" << std::endl;
         return false;
     }
 }

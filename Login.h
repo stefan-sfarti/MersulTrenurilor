@@ -7,12 +7,12 @@
 #include <iostream>
 #include "common.h"
 #include "sha256.h"
-#include "DbCon.h"
+#include "DbHandler.h"
 
 class Login {
 public:
-    bool RegisterAccount(DbCon &dbCon, MYSQL *con, std::string username, std::string password);
-    bool LoginAccount (DbCon &dbCon, MYSQL *con, std::string username, std::string password);
+    bool RegisterAccount(DbHandler &dbCon, MYSQL *con, std::string &username, std::string &password) const;
+    bool LoginAccount (DbHandler &dbCon, MYSQL *con, std::string &username, std::string &password) const;
 };
 
 

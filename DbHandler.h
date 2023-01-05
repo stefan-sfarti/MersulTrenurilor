@@ -7,7 +7,7 @@
 #include "mysql/mysql.h"
 #include "string"
 
-class DbCon {
+class DbHandler {
 private:
     const char *server{"localhost"};
     const char *user{"stefan"};
@@ -19,9 +19,9 @@ public:
     std::string GetTrainsToday(MYSQL *con);
     std::string GetArrivals(MYSQL *con);
     std::string GetDepartures(MYSQL *con);
-    void AddAccount(MYSQL *con, std::string username, std::string password);
-    bool CheckUserDetails(MYSQL *con, std::string username, std::string password);
-    bool CheckUsername(MYSQL *con, std::string username);
+    void AddAccount(MYSQL *con, std::string &username, std::string &password) const;
+    bool CheckUserDetails(MYSQL *con, std::string &username, std::string &password);
+    bool CheckUsername(MYSQL *con, std::string &username);
 };
 
 

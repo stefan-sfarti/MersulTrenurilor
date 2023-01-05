@@ -9,7 +9,7 @@ class Thread {
 private:
     int clientSocket;
     Server * pServer;
-
+    bool IsLoggedIn{false};
 public:
     Thread ( int sock, Server * pServer ) : pServer (pServer), clientSocket (sock) {
 
@@ -17,13 +17,14 @@ public:
 
 private:
     void run ();
-
+    bool doLogin() const;
+    bool doRegister() const;
+    void GetTrainData() const ;
 public:
     static void * threadLaunch ( void * argument ) {
 
         auto pThread = static_cast < Thread * > ( argument );
-        pThread->run ();
-
+        pThread->run();
 
         delete pThread;
         return nullptr;

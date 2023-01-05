@@ -2,19 +2,19 @@
 // Created by stefan on 30.12.2022.
 //
 #include "common.h"
-#include "DbCon.h"
+#include "DbHandler.h"
 #include "sha256.h"
 
-MYSQL *DbCon::connection_setup() {
-    MYSQL *con = mysql_init(NULL);
-    if (!mysql_real_connect(con, this -> server, this -> user, this -> password, this -> database, 0, NULL, 0) ) {
+MYSQL *DbHandler::connection_setup() {
+    MYSQL *con = mysql_init(nullptr);
+    if (!mysql_real_connect(con, this -> server, this -> user, this -> password, this -> database, 0, nullptr, 0) ) {
         std::cout << "Connection to Database failed:" << mysql_error(con) << std::endl;
         exit(1);
     }
     return con;
 }
 
-MYSQL_RES *DbCon::mysql_execute_query(MYSQL *connection, const char *sql_query) {
+MYSQL_RES *DbHandler::mysql_execute_query(MYSQL *connection, const char *sql_query) {
     if (mysql_query(connection, sql_query)){
         std::cout << "MySQL Query Error: " << mysql_error(connection) << std::endl;
         exit(1);
@@ -22,7 +22,7 @@ MYSQL_RES *DbCon::mysql_execute_query(MYSQL *connection, const char *sql_query) 
     return mysql_use_result(connection);
 }
 
-std::string DbCon::GetTrainsToday(MYSQL *con) {
+std::string DbHandler::GetTrainsToday(MYSQL *con) {
     MYSQL_RES *res;
     MYSQL_ROW row;
     std::string message;
@@ -30,7 +30,7 @@ std::string DbCon::GetTrainsToday(MYSQL *con) {
     res = mysql_execute_query(con, "SELECT * FROM MersulTrenurilor WHERE DATE(data_plecare) = CURDATE() OR DATE(data_sosire) = CURDATE();");
     num_fields = mysql_num_fields(res);
     int counter{0};
-    while ((row = mysql_fetch_row(res)) != NULL) {
+    while ((row = mysql_fetch_row(res)) != nullptr) {
         for (int j = 0; j < num_fields; ++j) {
             message.append(row[j]);
             message.append(" | ");
@@ -46,7 +46,7 @@ std::string DbCon::GetTrainsToday(MYSQL *con) {
     return message;
 }
 
-std::string DbCon::GetArrivals(MYSQL *con) {
+std::string DbHandler::GetArrivals(MYSQL *con) {
     MYSQL_RES *res;
     MYSQL_ROW row;
     std::string message;
@@ -55,7 +55,7 @@ std::string DbCon::GetArrivals(MYSQL *con) {
     num_fields = mysql_num_fields(res);
     int counter{0};
 
-    while ((row = mysql_fetch_row(res)) != NULL) {
+    while ((row = mysql_fetch_row(res)) != nullptr) {
         for (int j = 0; j < num_fields; ++j) {
             if (j % 5 == 0 && j % 10 != 0){
                 message.append("Delay: ");
@@ -74,7 +74,7 @@ std::string DbCon::GetArrivals(MYSQL *con) {
     return message;
 }
 
-std::string DbCon::GetDepartures(MYSQL *con) {
+std::string DbHandler::GetDepartures(MYSQL *con) {
     MYSQL_RES *res;
     MYSQL_ROW row;
     std::string message;
@@ -83,7 +83,7 @@ std::string DbCon::GetDepartures(MYSQL *con) {
     num_fields = mysql_num_fields(res);
     int counter{0};
 
-    while ((row = mysql_fetch_row(res)) != NULL) {
+    while ((row = mysql_fetch_row(res)) != nullptr) {
         for (int j = 0; j < num_fields; ++j) {
             message.append(row[j]);
             message.append(" | ");
@@ -98,13 +98,13 @@ std::string DbCon::GetDepartures(MYSQL *con) {
     return message;
 }
 
-bool DbCon::CheckUsername(MYSQL *con, std::string username) {
+bool DbHandler::CheckUsername(MYSQL *con, std::string &username) {
     MYSQL_RES *res;
     MYSQL_ROW row;
     std::string query = "SELECT username FROM Accounts WHERE username ='" + username +"';";
     res = mysql_execute_query(con, query.c_str());
     row = mysql_fetch_row(res);
-    if (row != NULL){
+    if (row != nullptr){
         mysql_free_result(res);
         return false;
     }else {
@@ -114,7 +114,7 @@ bool DbCon::CheckUsername(MYSQL *con, std::string username) {
 }
 
 
-bool DbCon::CheckUserDetails(MYSQL *con, std::string username,std::string password) {
+bool DbHandler::CheckUserDetails(MYSQL *con, std::string &username, std::string &password) {
     MYSQL_RES *res;
     MYSQL_ROW row;
     SHA256 sha256;
@@ -122,7 +122,7 @@ bool DbCon::CheckUserDetails(MYSQL *con, std::string username,std::string passwo
     std::string query = "SELECT username FROM Accounts WHERE username ='" + username +"' AND password = '" +hashedPass +"';";
     res = mysql_execute_query(con, query.c_str());
     row = mysql_fetch_row(res);
-    if (row != NULL){
+    if (row != nullptr){
         mysql_free_result(res);
         return true;
     }else {
@@ -131,7 +131,7 @@ bool DbCon::CheckUserDetails(MYSQL *con, std::string username,std::string passwo
     }
 }
 
-void DbCon::AddAccount(MYSQL *con, std::string username, std::string password) {
+void DbHandler::AddAccount(MYSQL *con, std::string &username, std::string &password) const {
     SHA256 sha256;
     std::string hashedPass = sha256(password);
     std::string query = "INSERT INTO Accounts (username,password) VALUES (\"" + username + "\"" + ",\"" + hashedPass + "\");";
