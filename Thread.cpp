@@ -9,32 +9,34 @@
 
 
 void Thread :: run () {
-    char buffer[1024];
-    read(this->clientSocket, &buffer, sizeof buffer);
-    std::cout << buffer << std::endl;
-    int req = atoi(buffer);
-    switch (req) {
-        case 1:
-            if (doLogin()){
-                this->IsLoggedIn = true;
-            }else
-                this->IsLoggedIn = false;
-            break;
-        case 2:
-            if (doRegister()){
-                this->IsLoggedIn = true;
-            }else
-                this->IsLoggedIn = false;
-            break;
-        default:
-            std::cout << "Invalid request" << std::endl;
-            
-    }
-    if (this->IsLoggedIn){
-        GetTrainData();
-    }else{
-        std::cout << "Not logged in" << std::endl;
-    }
+    if (CheckDatabaseCon()){
+        char buffer[1024];
+        read(this->clientSocket, &buffer, sizeof buffer);
+        std::cout << buffer << std::endl;
+        int req = atoi(buffer);
+        switch (req) {
+            case 1:
+                if (doLogin()){
+                    this->IsLoggedIn = true;
+                }else
+                    this->IsLoggedIn = false;
+                break;
+            case 2:
+                if (doRegister()){
+                    this->IsLoggedIn = true;
+                }else
+                    this->IsLoggedIn = false;
+                break;
+            default:
+                std::cout << "Invalid request" << std::endl;
+
+        }
+        if (this->IsLoggedIn){
+            GetTrainData();
+        }else{
+            std::cout << "Not logged in" << std::endl;
+        }
+    }else std::cout << "Set environment variables \"_MYSQLUSER\" and \"_MYSQLPASS\" to your database user and password" <<std::endl;
 
 }
 
@@ -122,3 +124,17 @@ void Thread::GetTrainData() const {
     std::string departures = dbCon.GetDepartures(con);
     std::cout << "Departures: " << std::endl << departures << std::endl;
 }
+
+
+bool Thread::CheckDatabaseCon() const {
+    DbHandler dbCon;
+    try {
+        dbCon.connection_setup();
+        return true;
+    }catch (int e){
+
+        return false;
+    }
+}
+
+

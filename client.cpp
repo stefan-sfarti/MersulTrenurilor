@@ -34,13 +34,14 @@ void Client::Login() {
     std::cout << "Enter your password: " << std::endl;
     std::cin >> req;
     write(this->s, &req, sizeof req);
+    memset(buffer, 0, sizeof(buffer));
     read ( this->s, &buffer, sizeof buffer);
     std::string message = std::string (buffer);
-    if (message.length() == 17){
+    if (message.length() == 17 || message.length() == 24){
         std::cout << message << std::endl;
         this->IsLoggedIn = true;
-    }else if (message.length() == 14){
-        std::cout << message.substr(0, 13) << std::endl;
+    }else if (message.length() == 13 || message.length() == 20){
+        std::cout << message << std::endl;
         this->IsLoggedIn = false;
     }
 

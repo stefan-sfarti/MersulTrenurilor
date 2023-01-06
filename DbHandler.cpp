@@ -7,9 +7,9 @@
 
 MYSQL *DbHandler::connection_setup() {
     MYSQL *con = mysql_init(nullptr);
-    if (!mysql_real_connect(con, this -> server, this -> user, this -> password, this -> database, 0, nullptr, 0) ) {
+    if (!mysql_real_connect(con, this -> server, getenv("_MYSQLUSER"), getenv("_MYSQLPASS"), this -> database, 0, nullptr, 0) ) {
         std::cout << "Connection to Database failed:" << mysql_error(con) << std::endl;
-        exit(1);
+        throw 1;
     }
     return con;
 }
@@ -43,6 +43,9 @@ std::string DbHandler::GetTrainsToday(MYSQL *con) {
     }
     std::cout << "Rows processed: " << counter << std::endl;
     mysql_free_result(res);
+    if (message.length() == 0){
+        message = "No trains today";
+    }
     return message;
 }
 
@@ -71,6 +74,9 @@ std::string DbHandler::GetArrivals(MYSQL *con) {
     }
     std::cout << "Rows processed: " << counter << std::endl;
     mysql_free_result(res);
+    if (message.length() == 0){
+        message = "No trains arriving in the next hour";
+    }
     return message;
 }
 
@@ -95,6 +101,9 @@ std::string DbHandler::GetDepartures(MYSQL *con) {
     }
     std::cout << "Rows processed: " <<counter << std::endl;
     mysql_free_result(res);
+    if (message.length() == 0){
+        message = "No trains departing in the next hour";
+    }
     return message;
 }
 

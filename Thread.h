@@ -20,6 +20,7 @@ private:
     bool doLogin() const;
     bool doRegister() const;
     void GetTrainData() const ;
+    bool CheckDatabaseCon() const;
 public:
     static void * threadLaunch ( void * argument ) {
 
